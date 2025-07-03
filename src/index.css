@@ -302,7 +302,8 @@ button.buy {
   padding: 25px;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 123%;
+  overflow: scroll;
 }
 .popup.bought .bought-product .info h3 {
   padding: 20px;
