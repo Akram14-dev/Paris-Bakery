@@ -117,6 +117,7 @@ input:hover {
   width: fit-content;
   margin: auto;
   position: relative;
+  margin-bottom: 20px;
 }
 .menu .content-header p {
   font-size: 25px;
@@ -199,11 +200,12 @@ button.buy {
 .pop-up .product-description .product-buy input {
   padding: 0px 20px;
 }
-.pop-up .product-description .product-buy form {
+.popup .product-description .product-buy form {
   display: flex;
   align-items: center;
   justify-content: center;
   direction: rtl;
+  flex-direction: column;
 }
 .menu .product .buy span {
   font-size: 20px;
@@ -277,6 +279,20 @@ button.buy {
 .popup .close {
   flex-basis: 100%;
   margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+  flex-direction: column;
+}
+button.done:hover {
+  background-color: #146591;
+  color: white;
+}
+
+button.remove:hover {
+  background-color: #ee636d;
+  color: white;
 }
 .popup.bought {
   background: white;
@@ -289,12 +305,17 @@ button.buy {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
+  flex-direction: column;
   margin: 0 20px;
+  padding-top: 46px;
 }
 .popup.bought ul {
   padding: 0;
-  overflow: scroll;
+}
+.popup.bought ul li {
+  display: flex;
+  align-items: center;
+  direction: rtl;
 }
 .popup.bought .bought-product .info {
   display: flex;
@@ -302,8 +323,6 @@ button.buy {
   padding: 25px;
   align-items: center;
   justify-content: center;
-  width: 123%;
-  overflow: scroll;
 }
 .popup.bought .bought-product .info h3 {
   padding: 20px;
@@ -322,6 +341,10 @@ button.buy {
   padding: 0 30px;
   font-size: 20px;
 }
+.popup.bought .bought-product .buttons {
+  display: flex;
+  gap: 10px;
+}
 .popup.bought .bought-product .info button {
   padding: 10px 20px;
   width: 20%;
@@ -334,6 +357,10 @@ button.buy {
   width: 130px;
   margin: 20px;
 }
+ul .prod {
+  display: flex;
+}
+
 footer {
   font-size: 11px;
   text-align: center;
@@ -403,12 +430,13 @@ footer {
   }
   .popup.bought .bought-product .info h3 {
     font-size: 16px;
+    margin: 0;
   }
   .popup.bought .bought-product .info p:nth-child(3) {
     font-size: 15px;
   }
   .popup.bought img {
-    width: 60px;
+    width: 100px;
   }
   .popup.bought .bought-product .info button {
     font-size: 15px;
@@ -417,6 +445,33 @@ footer {
   .popup.bought .bought-product .info strong {
     padding: 0 15px;
     font-size: 15px;
+  }
+  .popup.bought .bought-product .info {
+    overflow: scroll;
+  }
+  .popup .close button {
+    font-size: 14px;
+  }
+  .popup.bought ul {
+    padding: 0;
+    /* overflow: scroll; */
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .popup.bought .bought-product .info {
+    flex-direction: column;
+  }
+  .popup.bought ul li {
+    flex-direction: column;
+  }
+  .buttons button {
+    margin: 0;
+  }
+  .buttons button {
+    font-size: 14px;
   }
 }
 @media (max-width: 1111px) {

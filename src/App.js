@@ -25,7 +25,7 @@ const products = [
     name: "سينابون ",
     image: "/products/item3.jpeg",
     description: " لفافة قرفة هشة، طرية ومحلاة، تُقدَّم دافئة مع صوص السكر",
-    price: "10",
+    price: "15",
     quantity: 0,
   },
   {
@@ -34,7 +34,7 @@ const products = [
     name: "دونتس ",
     image: "/products/item4.jpeg",
     description: "عجينة مقلية دائرية، هشة ومحلاة، تُغطى بالشوكولاتة أو السكر",
-    price: "10",
+    price: "12",
     quantity: 0,
   },
   {
@@ -288,6 +288,7 @@ function ProductList({
           selectedProduct={selectedProduct}
           setBoughtItem={setBoughtItem}
           onRemove={onRemove}
+          openCart={openCart}
         />
       ) : (
         isOpen && (
@@ -319,7 +320,7 @@ function Product({ product, onSelection, selectedProduct, isSubmited }) {
             <p>{product.type}</p>
             <p>{product.description}</p>
             <div className="buy">
-              <span>{product.price}$</span>
+              <span>{product.price}£</span>
               <button
                 className={`btn ${isSubmited} && ${selectedProduct}? "selected" : ""`}
                 onClick={() => onSelection(product)}
@@ -342,10 +343,12 @@ function Cart({
   handleSetState,
   setBoughtItem,
   onRemove,
+  openCart,
 }) {
   return (
     <div className="popup-overlay bought">
-      <div className="popup bought">
+      <div className="popup bought" style={{ marginTop: "20px" }}>
+        <ContentHeader openCart={openCart}></ContentHeader>
         {boughtItems.length !== 0 ? (
           <ul>
             {boughtItems.map((boughtItem) => (
@@ -364,7 +367,11 @@ function Cart({
           </ul>
         ) : (
           <p
-            style={{ textAlign: "center", fontSize: "30px", marginTop: "20px" }}
+            style={{
+              textAlign: "center",
+              fontSize: "30px",
+              marginTop: "20px",
+            }}
           >
             {" "}
             🥺 لا يوجد عناصر فى السلة
@@ -380,6 +387,27 @@ function Cart({
   );
 }
 
+const WhatsAppButton = ({ phoneNumber, message }) => {
+  const handleClick = () => {
+    // Remove spaces and special characters from phone number
+    const cleanedNumber = phoneNumber.replace(/\D/g, "");
+
+    // Encode the message for URL
+    const encodedMessage = encodeURIComponent(message);
+
+    // Create the WhatsApp URL
+    const url = `https://wa.me/${cleanedNumber}?text=${encodedMessage}`;
+
+    // Open the URL in a new tab
+    window.open(url, "_blank");
+  };
+  return (
+    <button className="btn done" onClick={handleClick}>
+      تاكيد؟ ✅{" "}
+    </button>
+  );
+};
+
 function PopUpOverlay({
   handleBack,
   selectedProduct,
@@ -391,7 +419,7 @@ function PopUpOverlay({
 }) {
   const [alertNum, setAlertNum] = useState(false);
   function handleAlertNum() {
-    setAlertNum(true);
+    setAlertNum((alertNum) => !alertNum);
   }
 
   function handleSubmit(e) {
@@ -413,8 +441,11 @@ function PopUpOverlay({
             <p>{selectedProduct.type}</p>
             <p>{selectedProduct.description}</p>
             <div className="product-buy">
-              <strong>{selectedProduct.price}$</strong>
+              <strong>{selectedProduct.price}£</strong>
               <form onSubmit={handleSubmit}>
+                <label style={{ margin: "0px 20px" }} htmlFor="input">
+                  العدد
+                </label>
                 <input
                   value={number}
                   type="number"
@@ -422,9 +453,6 @@ function PopUpOverlay({
                   onChange={handleSetNumber}
                   id="input"
                 ></input>
-                <label style={{ margin: "0px 20px" }} htmlFor="input">
-                  العدد
-                </label>
 
                 <button className="buy btn " onClick={handleAlertNum}>
                   🤑 شراء
@@ -455,19 +483,46 @@ function PopUpOverlay({
 }
 
 function BoughtProduct({ product, boughtItem, onRemove }) {
+  const messageContent = `لو سمحت عاوز اطلب عدد ${boughtItem.quantity} من ال${boughtItem.name}`;
   return (
-    <div>
+    <div className="prod">
       <li className="bought-product" id="cart">
         <div className="info">
           <img alt={product.name} src={product.image}></img>
           <h3>{product.name}</h3>
           <p>{product.type}</p>
-          <strong>{`x${product.quantity}    ${product.price}$`}</strong>
-          <button className="btn" onClick={() => onRemove(boughtItem.id)}>
-            ازالة 🗑️{" "}
-          </button>
+          <strong>{`x${product.quantity}    ${product.price}£`}</strong>
         </div>
+        {product && (
+          <div className="buttons">
+            <button
+              className="btn remove"
+              onClick={() => onRemove(boughtItem.id)}
+            >
+              ازالة 🗑️{" "}
+            </button>
+            <WhatsAppButton
+              phoneNumber="+201013541138"
+              message={messageContent}
+            />
+          </div>
+        )}
       </li>
     </div>
   );
 }
+
+// const existingItem = boughtItems.find(
+//       (boughtItem) => boughtItem.id === product.id
+//     );
+//     if (existingItem) {
+//       // If exists, increase quantity
+//       return boughtItems.map((boughtItem) =>
+//         boughtItem.id === product.id
+//           ? { ...boughtItem, quantity: boughtItem.quantity + 1 }
+//           : boughtItem
+//       );
+//     } else {
+//       setBoughtItem((boughtItems) => [...boughtItems, product]);
+//       handleIsOpen();
+//     }
