@@ -502,7 +502,7 @@ function BoughtProduct({ product, boughtItem, onRemove }) {
               ازالة 🗑️{" "}
             </button>
             <WhatsAppButton
-              phoneNumber="+201013541138"
+              phoneNumber="+201013541183"
               message={messageContent}
             />
           </div>
