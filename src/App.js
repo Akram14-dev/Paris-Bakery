@@ -483,7 +483,8 @@ function PopUpOverlay({
 }
 
 function BoughtProduct({ product, boughtItem, onRemove }) {
-  const messageContent = `لو سمحت عاوز اطلب عدد ${boughtItem.quantity} من ال${boughtItem.name}`;
+  const link = "https://paris-bakery.vercel.app/";
+  const messageContent = `لو سمحت عاوز اطلب عدد ${boughtItem.quantity} من ال${boughtItem.name} \n ${link}`;
   return (
     <div className="prod">
       <li className="bought-product" id="cart">
